@@ -13,10 +13,8 @@ import IconButton from '@mui/material/IconButton';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import BookmarkAddedOutlinedIcon from '@mui/icons-material/BookmarkAddedOutlined';
 import Image from 'next/image'
-import Bookmark from '../../components/Alerts/Bookmark';
 import Head from 'next/head';
 import Snackbar from '@mui/material/Snackbar';
-import CloseIcon from '@mui/icons-material/Close';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import React from 'react';
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(

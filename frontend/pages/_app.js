@@ -1,4 +1,5 @@
 import '../styles/globals.css'
+import '../styles/Admin.modules.css'
 import 'tailwindcss/tailwind.css'
 import * as React from 'react';
 import PropTypes from 'prop-types';

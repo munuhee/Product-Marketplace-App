@@ -4,7 +4,7 @@ export const Products = ()=> {
   return <Link href="/products">Products</Link>
 }
 export const Admin = ()=> {
-    return <Link href="/admin/products">Admin</Link>
+    return <Link href="/admin">Admin</Link>
 }
 export const Pricing = ()=> {
 return <Link href="/pricing">Pricing</Link>
