@@ -4,7 +4,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 function Profiles() {
   return (
     <>
-        <table class="table-auto">
+        <table className="table-auto">
             <thead className='text-center'>
                 <tr>
                 <th>Username</th>
