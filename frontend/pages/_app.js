@@ -9,13 +9,19 @@ import { CacheProvider } from '@emotion/react';
 import createEmotionCache from '../src/createEmotionCache';
 import Layout from '../components/Layout'
 import { muiTheme } from '../src/muiTheme';
+import NProgress from "nprogress";
+import Router from "next/router";
+import { useEffect } from "react";
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
-
 export default function MyApp(props) {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
-
+  useEffect(() => {
+    Router.events.on("routeChangeStart", () => NProgress.start());
+    Router.events.on("routeChangeComplete", () => NProgress.done());
+    Router.events.on("routeChangeError", () => NProgress.done());
+  }, []);
   return (
     <CacheProvider value={emotionCache}>
       <ThemeProvider theme={muiTheme}>

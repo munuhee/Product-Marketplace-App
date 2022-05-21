@@ -5,8 +5,8 @@ function Header() {
   return (
     <div className={styles.header2}>
           <div className={styles.headerContent}>
-              <h1 className="text-3xl md:text-4xl font-bold">Get the header you needed for your awesome website.</h1><br/>
-              <h3 className="text-2xl md:text-3xl font-medium mb-2">Get the header you needed for your awesome website.</h3>
+              <h1 className="text-3xl md:text-4xl font-bold">All Assets you need in one place.</h1><br/>
+              <h3 className="text-2xl md:text-3xl font-medium mb-2">Find and download the best high-quality Photoshop templates, Icons and HD Images</h3>
               <div className="container flex justify-center items-center">
               <div className="relative">
                   <div className="absolute top-4 left-3">

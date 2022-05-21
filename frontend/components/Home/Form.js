@@ -10,10 +10,10 @@ function Designers() {
                 <div className="px-5 sm:px-10 md:px-10 md:flex lg:block lg:w-1/2 lg:max-w-3xl lg:mr-8 lg:px-20">
                 <div className="md:w-1/2 md:mr-10 lg:w-full lg:mr-0">
                     <h1 className="text-3xl xl:text-4xl font-black md:leading-none xl:leading-tight">
-                    Hire a Designer Near You
+                    Hire a Graphic Designer Now
                     </h1>
                     <p className="mt-4 xl:mt-2">
-                    World className Designers, just for you on contract, full-time or part-time, whatever you need.
+                    World class Graphic Designer, just for you on contract, full-time or part-time, whatever you need.
                     </p>
                 </div>
 
@@ -23,7 +23,7 @@ function Designers() {
                         className='w-full'
                         id="outlined-uncontrolled"
                         label="Design Sevice"
-                        defaultValue="foo"
+                        defaultValue="Design Service"
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -37,8 +37,8 @@ function Designers() {
                     <TextField
                         className='w-full border bg-gray-100'
                         id="outlined-uncontrolled"
-                        label="Location Address"
-                        defaultValue="foo"
+                        label="Email Address"
+                        defaultValue="youremail@domain.com"
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
