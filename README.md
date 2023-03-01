@@ -1,3 +1,2 @@
 # NextJs-Ecommerce
-This is a Ecommerce app that allows the admin to post PSD,PNG and JPG files for users to download.
-The users can subscribe to the available plans so as to access a wide variety of products
+This is an Ecommerce application designed to make it easy for the administrator to share PSD, PNG, and JPG files with users for download. The app provides users with a range of subscription plans that grant access to a broad selection of products. Whether you're a graphic designer, web developer, or content creator, you'll appreciate the convenience of having high-quality resources at your fingertips. With this app, you can easily browse and download the latest files, including templates, graphics, logos, and more. As an administrator, you'll have full control over what products are available to your subscribers, ensuring they have access to the best content.
