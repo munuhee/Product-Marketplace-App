@@ -1,35 +1,16 @@
 from django.contrib import admin
-from mptt.admin import MPTTModelAdmin
-
-from .models import *
-
-admin.site.register(Category, MPTTModelAdmin)
+from .models import Product, Category
 
 
-class ProductSpecificationInline(admin.TabularInline):
-    model = ProductSpecification
-
-
-@admin.register(ProductType)
-class ProductTypAdmin(admin.ModelAdmin):
-    inlines = [
-        ProductSpecificationInline
-    ]
-
-
-class ProductImageInline(admin.TabularInline):
-    model = ProductImage
-
-
-class ProductSpecificationValueInline(admin.TabularInline):
-    model = ProductSpecificationValue
-
-
-@admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    inlines = [
-        ProductSpecificationValueInline,
-        ProductImageInline
-    ]
+    list_display = ('name', 'category', 'price', 'pricing_plan')
+    list_filter = ('category', 'pricing_plan')
+    search_fields = ('name', 'description')
 
-    prepopulated_fields = {'slug': ('title',)}
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+
+admin.site.register(Product, ProductAdmin)
+admin.site.register(Category, CategoryAdmin)

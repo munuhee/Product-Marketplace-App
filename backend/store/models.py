@@ -1,182 +1,25 @@
-from tkinter import PhotoImage
 from django.db import models
-from django.urls import reverse
-from django.utils.translation import gettext_lazy as _
-from mptt.models import MPTTModel, TreeForeignKey
-from djrichtextfield.models import RichTextField
-from django.db.models.signals import pre_delete
-from cloudinary.models import CloudinaryField
-import cloudinary
-from django.dispatch import receiver
+
 
 PRICING_CHOICES = (
     ("FREE", "FREE"),
     ("PRO", "PRO")
 )
-class Category(MPTTModel):
-    parent = TreeForeignKey(
-        "self",
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-        related_name="children"
-    )
-    name = models.CharField(
-        verbose_name=_("Category Name"),
-        help_text=_("Required and unique"),
-        max_length=255,
-        unique=True
-    )
-    slug = models.SlugField(
-        verbose_name=_("Category safe URL"),
-        max_length=255,
-        unique=True
-    )
-    is_active = models.BooleanField(default=True)
 
-    class MPTTMeta:
-        order_insertion_by = ["name"]
-
-    class Meta:
-        verbose_name = _("Category")
-        verbose_name_plural = _("Categories")
-
-    def get_absolute_url(self):
-        return reverse("store:category_list", args=[self.slug])
-
-    def __str__(self):
-        return self.name
-
-
-class ProductType(models.Model):
-    name = models.CharField(
-        verbose_name=_("Product Name"),
-        help_text=_("Required"),
-        max_length=255,
-        unique=True
-    )
-    is_active = models.BooleanField(default=True)
-
-    class Meta:
-        verbose_name = _("Product Type")
-        verbose_name_plural = _("Product Types")
-
-    def __str__(self):
-        return self.name
-
-
-class ProductSpecification(models.Model):
-    name = models.CharField(
-        verbose_name=_("Name"),
-        help_text=_("Required"),
-        max_length=255,
-    )
-    product_type = models.ForeignKey(ProductType, on_delete=models.RESTRICT)
-
-    class Meta:
-        verbose_name = _("Product Specification")
-        verbose_name_plural = _("Product Specifications")
+class Category(models.Model):
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
 
 
 class Product(models.Model):
-    class Meta:
-        ordering = ("-created_at",)
-        verbose_name = _("Product")
-        verbose_name_plural = _("Products")
-
-    product_type = models.ForeignKey(ProductType, on_delete=models.RESTRICT)
-    category = models.ForeignKey(Category, on_delete=models.RESTRICT)
-    title = models.CharField(
-        verbose_name=_("title"),
-        help_text=_("Required"),
-        max_length=255,
-    )
-    pricing = models.CharField(max_length=9,
-                  choices=PRICING_CHOICES,
-                  default="FREE")
-    description = RichTextField(verbose_name=_("description"), help_text=_("Not Required"), blank=True)
-    slug = models.SlugField(max_length=255)
-    regular_price = models.DecimalField(
-        verbose_name=_("Regular price"),
-        help_text=_("Maximum 999.99"),
-        error_messages={
-            "name": {
-                "max_length": _("The price must be between 0 and 999.99."),
-            },
-        },
-        max_digits=5,
-        decimal_places=2,
-    )
-    discount_price = models.DecimalField(
-        verbose_name=_("Discount price"),
-        help_text=_("Maximum 999.99"),
-        error_messages={
-            "name": {
-                "max_length": _("The price must be between 0 and 999.99."),
-            },
-        },
-        max_digits=5,
-        decimal_places=2,
-    )
-    is_active = models.BooleanField(
-        verbose_name=_("Product visibility"),
-        help_text=_("Change product visibility"),
-        default=True,
-    )
-    created_at = models.DateTimeField(_("Created at"), auto_now_add=True, editable=False)
-    updated_at = models.DateTimeField(_("Updated at"), auto_now=True)
-
-    quantity = models.IntegerField(verbose_name=_("Product Quantity"), default=0, null=0)
-
-    def get_absolute_url(self):
-        return reverse("store:product_detail", args=[self.slug])
+    name = models.CharField(max_length=200)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    pricing_plan = models.CharField(max_length=10, choices=PRICING_CHOICES)
+    image = models.ImageField(upload_to='products/')
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)
 
     def __str__(self):
-        return self.title
-
-    @property
-    def is_in_stock(self):
-        return self.quantity > 0
-
-
-class ProductSpecificationValue(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    specification = models.ForeignKey(ProductSpecification, on_delete=models.RESTRICT)
-    value = models.CharField(
-        verbose_name=_("value"),
-        help_text=_("Product specification value (maximum of 255 words"),
-        max_length=255,
-    )
-
-    class Meta:
-        verbose_name = _("Product Specification Value")
-        verbose_name_plural = _("Product Specification Values")
-
-    def __str__(self):
-        return self.value
-
-
-class ProductImage(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="product_image")
-    product_image =cloudinary.models.CloudinaryField('image')
-    alt_text = models.CharField(
-        verbose_name=_("Alturnative text"),
-        help_text=_("Please add alturnative text"),
-        max_length=255,
-        null=True,
-        blank=True,
-    )
-    is_feature = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True, editable=False)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        verbose_name = _("Product Image")
-        verbose_name_plural = _("Product Images")
-
-    @receiver(pre_delete, sender=PhotoImage)
-    def photo_delete(sender, instance, **kwargs):
-        cloudinary.uploader.destroy(instance.image.public_id)
+        return self.name

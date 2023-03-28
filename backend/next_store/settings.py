@@ -1,5 +1,7 @@
+import datetime
 import cloudinary
 from pathlib import Path
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -8,7 +10,10 @@ SECRET_KEY = 'django-insecure-^0ho!d(@-a$ebbi57lx=b+8hao!ng5kex!@nd_6@ym&e2p_9kr
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+if DEBUG == True:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+else:
+    ALLOWED_HOSTS = ['www.example.com']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -17,6 +22,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'paypal.standard.ipn',
+    'paypal.standard.pdt',
     'rest_framework',
     'corsheaders',
     'cloudinary',
@@ -25,6 +32,7 @@ INSTALLED_APPS = [
     'djrichtextfield',
     'account',
     'store',
+    'subscription',
 ]
 
 MIDDLEWARE = [
@@ -37,6 +45,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# PayPal settings
+PAYPAL_RECEIVER_EMAIL = 'your-paypal-email@example.com'
+PAYPAL_TEST = True # set to False in production
+PAYPAL_IDENTITY_TOKEN = 'your-identity-token'
+PAYPAL_CERTIFICATE_ID = 'your-certificate-id'
+PAYPAL_PRIVATE_KEY = 'path/to/your/private/key.pem'
+PAYPAL_PUBLIC_KEY = 'path/to/your/public/key.pem'
 
 CSRF_COOKIE_SAMESITE = "None" if DEBUG else "Lax"
 SESSION_COOKIE_SAMESITE = "None" if DEBUG else "Lax"
@@ -120,23 +136,29 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.AllowAny',
-    ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
-    ]
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # other authentication classes here as needed
+    ],
+    # other settings here as needed
 }
 
-DJRICHTEXTFIELD_CONFIG = {
-    'js': ['//cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js'],
-    'init_template': 'djrichtextfield/init/tinymce.js',
-    'settings': {
-        'menubar': True,
-        'plugins': 'link image',
-        'toolbar': 'bold italic | link image | removeformat',
-        'width': 700
-    }
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+
+    'ALGORITHM': 'HS256',
+    'SIGNING_KEY': settings.SECRET_KEY,
+    'VERIFYING_KEY': None,
+
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'TOKEN_TYPE_CLAIM': 'token_type',
 }
 
 cloudinary.config(
