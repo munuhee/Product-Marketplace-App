@@ -1,5 +1,6 @@
 import datetime
 import cloudinary
+
 from pathlib import Path
 
 
@@ -150,7 +151,7 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 
     'ALGORITHM': 'HS256',
-    'SIGNING_KEY': settings.SECRET_KEY,
+    'SIGNING_KEY': SECRET_KEY,
     'VERIFYING_KEY': None,
 
     'AUTH_HEADER_TYPES': ('Bearer',),
