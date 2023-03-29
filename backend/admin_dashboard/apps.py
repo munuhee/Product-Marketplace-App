@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class SubscriptionConfig(AppConfig):
+class AdminDashboardConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'subscription'
+    name = 'admin_dashboard'

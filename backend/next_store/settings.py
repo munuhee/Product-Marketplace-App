@@ -1,8 +1,6 @@
 import datetime
 import cloudinary
-
 from pathlib import Path
-
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -23,17 +21,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'paypal.standard.ipn',
-    'paypal.standard.pdt',
     'rest_framework',
     'corsheaders',
+    'django_pesapal',
     'cloudinary',
     'mptt',
     'mixer',
     'djrichtextfield',
     'account',
     'store',
-    'subscription',
+    'vendor_assesment',
+    'admin_dashboard',
 ]
 
 MIDDLEWARE = [
@@ -47,13 +45,11 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# PayPal settings
-PAYPAL_RECEIVER_EMAIL = 'your-paypal-email@example.com'
-PAYPAL_TEST = True # set to False in production
-PAYPAL_IDENTITY_TOKEN = 'your-identity-token'
-PAYPAL_CERTIFICATE_ID = 'your-certificate-id'
-PAYPAL_PRIVATE_KEY = 'path/to/your/private/key.pem'
-PAYPAL_PUBLIC_KEY = 'path/to/your/public/key.pem'
+#pesapal integration
+PESAPAL_CONSUMER_KEY = 'UiP4RWd22mlI5ixzmIa6hB36yXB2Fmcp'
+PESAPAL_CONSUMER_SECRET = 'yGQzJhMJcrJ+FSPaXOuEfSUv3ZA='
+PESAPAL_DEMO = True
+
 
 CSRF_COOKIE_SAMESITE = "None" if DEBUG else "Lax"
 SESSION_COOKIE_SAMESITE = "None" if DEBUG else "Lax"
@@ -103,7 +99,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
+#AUTH_USER_MODEL = 'account.User'
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -139,9 +135,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        # other authentication classes here as needed
     ],
-    # other settings here as needed
 }
 
 SIMPLE_JWT = {

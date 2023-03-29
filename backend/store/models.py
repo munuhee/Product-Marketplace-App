@@ -2,6 +2,7 @@ from django.db import models
 from account.models import Vendor
 from django.contrib.auth.models import User
 
+
 class Category(models.Model):
     name = models.CharField(max_length=100)
 
@@ -14,7 +15,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     name = models.CharField(max_length=200)
     description = models.TextField()
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=4, decimal_places=2)
     image = models.ImageField(upload_to='products/')
     is_active = models.BooleanField(default=True)
 
@@ -25,7 +26,7 @@ class Product(models.Model):
 class Order(models.Model):
     client = models.ForeignKey(User, on_delete=models.CASCADE)
     products = models.ManyToManyField(Product, through='OrderItem')
-    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    total_price = models.DecimalField(max_digits=4, decimal_places=2)
     is_completed = models.BooleanField(default=False)
 
     def __str__(self):
