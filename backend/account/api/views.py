@@ -1,7 +1,9 @@
 from rest_framework import generics
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
 from account.models import Account, Vendor
-from .serializers import AccountSerializer, VendorSerializer
+from .serializers import AccountSerializer, VendorSerializer, MyTokenObtainPairSerializer
 from rest_framework import status
 from django.conf import settings
 from account.models import Account
