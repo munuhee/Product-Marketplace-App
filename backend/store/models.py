@@ -1,5 +1,5 @@
 from django.db import models
-from account.models import Vendor
+from vendor_management.models import Vendor
 from django.contrib.auth.models import User
 
 

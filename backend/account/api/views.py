@@ -2,44 +2,19 @@ from rest_framework import generics
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
-from account.models import Account, Vendor
-from .serializers import AccountSerializer, VendorSerializer, MyTokenObtainPairSerializer
+from account.models import Account
+from .serializers import AccountSerializer
 from rest_framework import status
 from django.conf import settings
 from account.models import Account
-#from rest_framework.authtoken.views import ObtainAuthToken
-#from rest_framework.authtoken.models import Token
-from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.views import TokenObtainPairView
 from django_pesapal.models import Transaction
 from next_store.settings import PESAPAL_CONSUMER_KEY, PESAPAL_CONSUMER_SECRET, PESAPAL_DEMO
 
-
-class MyTokenObtainPairView(TokenObtainPairView):
-    serializer_class = MyTokenObtainPairSerializer
-
-class CustomAuthToken(MyTokenObtainPairView):
-    serializer_class = MyTokenObtainPairSerializer
-    def post(self, request, *args, **kwargs):
-        serializer = self.serializer_class(data=request.data, context={'request': request})
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data['user']
-        token, created = Token.objects.get_or_create(user=user)
-        return Response({
-            'token': token.key,
-            'user_id': user.pk,
-            'email': user.email,
-        })
 
 class AccountAPIView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
-
-class VendorAPIView(generics.ListAPIView):
-    permission_classes = [IsAuthenticated]
-    queryset = Vendor.objects.all()
-    serializer_class = VendorSerializer
 
 
 class DepositView(APIView):

@@ -28,10 +28,11 @@ INSTALLED_APPS = [
     'mptt',
     'mixer',
     'djrichtextfield',
-    'account',
-    'store',
-    'vendor_assesment',
-    'admin_dashboard',
+    'account.apps.AccountConfig',
+    'store.apps.StoreConfig',
+    'admin_dashboard.apps.AdminDashboardConfig',
+    'vendor_management.apps.VendorManagementConfig',
+    'authentication.apps.AuthenticationConfig',
 ]
 
 MIDDLEWARE = [
