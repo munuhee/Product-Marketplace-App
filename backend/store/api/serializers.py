@@ -9,7 +9,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('id', 'vendor', 'category', 'name', 'description', 'price', 'image', 'is_active')
+        fields = ('id', 'contributor', 'category', 'name', 'description', 'price', 'image', 'is_active')
 
 class OrderItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
@@ -23,7 +23,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ('id', 'client', 'total_price', 'is_completed', 'order_items')
+        fields = ('id', 'customer', 'total_price', 'is_completed', 'order_items')
 
     def create(self, validated_data):
         order_items_data = validated_data.pop('order_items')

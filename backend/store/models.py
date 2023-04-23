@@ -1,5 +1,5 @@
 from django.db import models
-from vendor_management.models import Vendor
+from contributor_management.models import Contributor
 from django.contrib.auth.models import User
 
 
@@ -11,7 +11,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE)
+    contributor = models.ForeignKey(Contributor, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     name = models.CharField(max_length=200)
     description = models.TextField()
@@ -24,7 +24,7 @@ class Product(models.Model):
 
 
 class Order(models.Model):
-    client = models.ForeignKey(User, on_delete=models.CASCADE)
+    customer = models.ForeignKey(User, on_delete=models.CASCADE)
     products = models.ManyToManyField(Product, through='OrderItem')
     total_price = models.DecimalField(max_digits=4, decimal_places=2)
     is_completed = models.BooleanField(default=False)

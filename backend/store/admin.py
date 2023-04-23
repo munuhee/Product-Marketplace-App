@@ -6,15 +6,15 @@ class CategoryAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'vendor', 'category', 'price', 'is_active')
-    search_fields = ('name', 'vendor__user__username', 'category__name')
+    list_display = ('name', 'contributor', 'category', 'price', 'is_active')
+    search_fields = ('name', 'contributor__user__username', 'category__name')
 
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
     extra = 0
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('client', 'total_price', 'is_completed')
+    list_display = ('customer', 'total_price', 'is_completed')
     search_fields = ('client__username',)
     inlines = [OrderItemInline]
 

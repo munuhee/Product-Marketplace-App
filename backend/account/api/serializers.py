@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from account.models import Account
+from account.models import Wallet
 
 
-class AccountSerializer(serializers.ModelSerializer):
+class WalletSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Account
+        model = Wallet
         fields = ('balance',)

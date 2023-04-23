@@ -31,7 +31,7 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'store.apps.StoreConfig',
     'admin_dashboard.apps.AdminDashboardConfig',
-    'vendor_management.apps.VendorManagementConfig',
+    'contributor_management.apps.ContributorManagementConfig',
     'authentication.apps.AuthenticationConfig',
 ]
 
@@ -133,12 +133,14 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#Rest framework
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 }
 
+#simple_jwt
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
@@ -157,8 +159,14 @@ SIMPLE_JWT = {
     'TOKEN_TYPE_CLAIM': 'token_type',
 }
 
+#cloudinary
 cloudinary.config(
     cloud_name = "murste",
     api_key = "954227928843165",
     api_secret = "xCtcgqFOXLX71kj1f1X-fwxT610"
 )
+
+#paypal
+PAYPAL_MODE ='sandbox'
+PAYPAL_CLIENT_ID = 'ASZM2BBdTX_jI4dtaug2AIXVa09ktUDiTZeNRRwDAaesL0PX9J8nH8hxj8OCsSCU-nzT3hV1JAm8_Yxm'
+PAYPAL_CLIENT_SECRET = 'EIwzzZT0kf8bJBX9GL--bvLXdTKiD9oFERktCeioSLr75oSlbPHpgyidjTTusU7NF7rtlTgAWGS1C8eN'
