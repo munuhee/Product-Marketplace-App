@@ -1,4 +1,5 @@
-# NextJs-Ecommerce
+## Backend (Development in Progress)
+
 This API is built using Django Rest Framework.
 
 One of the key features of this Ecommerce application is the integration with PayPal, which allows customers to make direct payments for digital files. This provides a convenient and secure payment option for customers, ensuring a seamless purchasing experience.
