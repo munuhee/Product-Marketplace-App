@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from store.models import Category, Product, Order, OrderItem
+from store.models import Category, Product, Review, Order, OrderItem
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -7,23 +7,41 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ('id', 'name')
 
 class ProductSerializer(serializers.ModelSerializer):
+    category = serializers.StringRelatedField()  # Use StringRelatedField for displaying category name
+
     class Meta:
         model = Product
-        fields = ('id', 'contributor', 'category', 'name', 'description', 'price', 'image', 'is_active')
+        fields = '__all__'
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = '__all__'
 
 class OrderItemSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
 
     class Meta:
         model = OrderItem
-        fields = ('id', 'product', 'quantity', 'price')
+        fields = '__all__'
 
 class OrderSerializer(serializers.ModelSerializer):
-    order_items = OrderItemSerializer(many=True)
+    orderItems = serializers.SerializerMethodField(read_only=True)
+    customer = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Order
-        fields = ('id', 'customer', 'total_price', 'is_completed', 'order_items')
+        fields = '__all__'
+
+    def get_orderItems(self, obj):
+        items = obj.orderitem_set.all()
+        serializer = OrderItemSerializer(items, many=True)
+        return serializer.data
+
+    def get_customer(self, obj):
+        customer = obj.user
+        serializer = UserSerializer(user, many=False)
+        return serializer.data
 
     def create(self, validated_data):
         order_items_data = validated_data.pop('order_items')

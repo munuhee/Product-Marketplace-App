@@ -10,6 +10,7 @@ urlpatterns = [
     path('api/authentication/', include('authentication.api.urls')),
     path('api/contributormanagement/', include('contributor_management.api.urls')),
     path('api/store/', include('store.api.urls')),
+    path('api/users/', include('users.api.urls')),
 ]
 
 if settings.DEBUG:

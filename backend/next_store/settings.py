@@ -15,6 +15,7 @@ else:
     ALLOWED_HOSTS = ['www.example.com']
 
 INSTALLED_APPS = [
+    'users',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -32,7 +33,7 @@ INSTALLED_APPS = [
     'store.apps.StoreConfig',
     'admin_dashboard.apps.AdminDashboardConfig',
     'contributor_management.apps.ContributorManagementConfig',
-    'authentication.apps.AuthenticationConfig',
+    'authentication.apps.AuthenticationConfig'
 ]
 
 MIDDLEWARE = [
@@ -100,7 +101,13 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-#AUTH_USER_MODEL = 'account.User'
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
+AUTHENTICATION_BACKENDS = [
+    'authentication.backends.EmailBackend',
+]
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -152,8 +159,8 @@ SIMPLE_JWT = {
     'VERIFYING_KEY': None,
 
     'AUTH_HEADER_TYPES': ('Bearer',),
-    'USER_ID_FIELD': 'id',
-    'USER_ID_CLAIM': 'user_id',
+    'USER_ID_FIELD': 'email',
+    'USER_ID_CLAIM': 'email',
 
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',

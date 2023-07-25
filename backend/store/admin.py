@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, Order, OrderItem
+from .models import Category, Product, Review, Order, OrderItem
 
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name',)
@@ -8,6 +8,10 @@ class CategoryAdmin(admin.ModelAdmin):
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('name', 'contributor', 'category', 'price', 'is_active')
     search_fields = ('name', 'contributor__user__username', 'category__name')
+
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('product', 'user', 'name', 'rating', 'createdAt')
+    search_fields = ('product', 'user', 'name', 'rating', 'createdAt')
 
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
@@ -19,7 +23,7 @@ class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderItemInline]
 
 class OrderItemAdmin(admin.ModelAdmin):
-    list_display = ('product', 'order', 'quantity', 'price')
+    list_display = ('product', 'order',  'price')
     search_fields = ('product__name', 'order__client__username')
 
 admin.site.register(Category, CategoryAdmin)
