@@ -6,7 +6,7 @@ class CategoryAdmin(admin.ModelAdmin):
     search_fields = ('name',)
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'contributor', 'category', 'price', 'is_active')
+    list_display = ('name', 'contributor', 'price', 'is_active')
     search_fields = ('name', 'contributor__user__username', 'category__name')
 
 class ReviewAdmin(admin.ModelAdmin):
