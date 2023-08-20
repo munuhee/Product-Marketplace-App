@@ -40,6 +40,9 @@ class ProductCreate(generics.CreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = ProductSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(contributor=self.request.user)
+
 
 class ProductDetail(generics.RetrieveAPIView):
     queryset = Product.objects.all()

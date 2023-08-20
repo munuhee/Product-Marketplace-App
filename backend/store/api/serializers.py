@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from store.models import Category, Product, Review, Order, OrderItem
-
+from contributor_management.api.serializers import ContributorSerializer
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -8,6 +8,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class ProductSerializer(serializers.ModelSerializer):
     category = CategorySerializer(many=True)
+    contributor = ContributorSerializer()
 
     class Meta:
         model = Product

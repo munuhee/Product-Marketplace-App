@@ -19,6 +19,7 @@ class Product(models.Model):
     contributor = models.ForeignKey(Contributor, on_delete=models.CASCADE)
     category = models.ManyToManyField(Category)
     name = models.CharField(max_length=200)
+    file_type = models.CharField(max_length=8, blank=True, null=True)
     description = models.TextField()
     price = models.DecimalField(max_digits=4, decimal_places=2)
     image = models.ImageField(upload_to='products/')
