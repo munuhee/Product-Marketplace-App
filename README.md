@@ -1,4 +1,4 @@
-## Backend (Development in Progress)
+## Backend
 
 This API is built using Django Rest Framework.
 
